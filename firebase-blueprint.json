@@ -1,0 +1,60 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "User profile and settings",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "email": { "type": "string" },
+        "displayName": { "type": "string" },
+        "photoURL": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["uid", "email"]
+    },
+    "Transaction": {
+      "title": "Transaction",
+      "description": "Financial transaction record",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "amount": { "type": "number" },
+        "merchant": { "type": "string" },
+        "category": { "type": "string" },
+        "date": { "type": "string", "format": "date-time" },
+        "anomalyScore": { "type": "number" }
+      },
+      "required": ["userId", "amount", "merchant", "date"]
+    },
+    "Subscription": {
+      "title": "Subscription",
+      "description": "Recurring bill target for negotiation",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "provider": { "type": "string" },
+        "currentPrice": { "type": "number" },
+        "targetPrice": { "type": "number" },
+        "category": { "type": "string" },
+        "status": { "type": "string", "enum": ["active", "negotiating", "secured"] },
+        "nextRenewal": { "type": "string", "format": "date-time" }
+      },
+      "required": ["userId", "provider", "currentPrice", "status"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "User",
+      "description": "Private user profiles"
+    },
+    "/transactions/{transactionId}": {
+      "schema": "Transaction",
+      "description": "User transaction history"
+    },
+    "/subscriptions/{subId}": {
+      "schema": "Subscription",
+      "description": "User subscriptions targeting parity"
+    }
+  }
+}
