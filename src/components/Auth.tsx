@@ -59,7 +59,7 @@ export default function Auth() {
               </div>
               <div className="min-w-0">
                 <div className="text-[10px] font-black text-blue-950 uppercase truncate">Zero_Trust_Auth</div>
-                <div className="text-[9px] text-slate-400 font-bold font-mono">Secured by Firebase Enterprise.</div>
+                <div className="text-[9px] text-slate-400 font-bold font-mono">Secured by Autonomous Handshake.</div>
               </div>
             </div>
           </div>

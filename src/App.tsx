@@ -15,11 +15,9 @@ import {
   User as UserIcon
 } from 'lucide-react';
 import { cn } from './lib/utils';
-import { auth, logout, onAuthStateChanged } from './lib/firebase';
-import { User } from 'firebase/auth';
+import { auth, logout, onAuthStateChanged, type User } from './lib/firebase';
 
 // --- COMPONENTS ---
-import Auth from './components/Auth';
 import CommandCenter from './components/CommandCenter';
 import LedgerStream from './components/LedgerStream';
 import DependencyMatrix from './components/DependencyMatrix';
@@ -69,9 +67,7 @@ export default function App() {
       <CustomCursor />
       <div className="scanline" />
 
-      {!user ? (
-        <Auth />
-      ) : (
+      {user && (
         <>
           {/* Mesh Background */}
           <div className="mesh-bg">
@@ -163,15 +159,6 @@ export default function App() {
                 >
                   {isSidebarOpen ? <X className="w-4 h-4" /> : <Menu className="w-4 h-4" />}
                 </button>
-                {isSidebarOpen && (
-                  <button 
-                    onClick={logout}
-                    className="h-full px-4 flex items-center justify-center bg-blue-900 text-white hover:bg-blue-800 transition-all rounded group"
-                    title="Logout"
-                  >
-                    <LogOut className="w-4 h-4 transition-transform group-hover:translate-x-1" />
-                  </button>
-                )}
               </div>
             </div>
           </motion.nav>
