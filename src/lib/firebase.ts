@@ -100,13 +100,21 @@ export function handleFirestoreError(error: any, operationType: FirestoreErrorIn
 
 // Connection test
 async function testConnection() {
+  if (!app || !firebaseConfig.projectId || firebaseConfig.projectId.includes('remixed')) {
+    console.log("Firebase: Skipping connection test (Incomplete Configuration).");
+    return;
+  }
+
   try {
     console.log("Firebase: Testing connection...");
+    // Attempt to get the connection test document
     await getDocFromServer(doc(db, 'test', 'connection'));
     console.log("Firebase: Connection established.");
   } catch (error: any) {
     if (error.message?.includes('the client is offline')) {
       console.warn("Firebase: Client is offline. Check net connection.");
+    } else if (error.code === 'permission-denied') {
+      console.warn("Firebase: Connection test failed (Permission Denied). This is expected if the Firebase project hasn't been set up for this remix yet. Please use the 'Initialize Guest Node' to continue in Autonomous Mode.");
     } else {
       console.error("Firebase: Connection test failed:", error);
     }
